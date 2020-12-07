@@ -17,7 +17,6 @@ module.exports.todoCreate = async (req, res) => {
 
 module.exports.todoDelete = async (req, res) => {
     try {
-        console.log(req)
         const todo = await Todo.findOneAndDelete({_id: req.params.id})
         if(todo === null) {
             return res.send({success: false, error: 'there is no such id'})
@@ -31,9 +30,13 @@ module.exports.todoDelete = async (req, res) => {
     }
 }
 
+ // ?????????????????
 module.exports.todoUpdate = async (req, res) => {
     try {
-        const todo = await Todo.findOneAndReplace({ _id: req.params.id }, {value: 'updated'})
+        const todo = await Todo.findOneAndReplace(
+            { _id: req.params.id },
+            {value: req.body.value, isCompleted: req.body.isCompleted })
+
         if(todo === null) {
             return res.send({success: false, error: 'there is no such id'})
         }
@@ -46,31 +49,30 @@ module.exports.todoUpdate = async (req, res) => {
     }
 }
 
-module.exports.todoGetAllActive = async (req, res) => {
-    try {
-        const todos = await Todo.find({_id: req.params.id})
-        if(todos === null) {
-            return res.send({success: false, error: 'there is no such id'})
-        }
-        return res.send(todos);
-    } catch (e) {
-        if(!validId(req.params.id)) {
-            return res.send({success: false, error: 'invalid id'})
-        }
-        return res.send({success: false, error: e})
-    }
-}
-
-module.exports.todoGetAllCompleted = async (req, res) => {
-
-}
+// module.exports.todoGetAllActive = async (req, res) => {
+//     try {
+//         const todos = await Todo.find({_id: req.params.id})
+//         if(todos === null) {
+//             return res.send({success: false, error: 'there is no such id'})
+//         }
+//         return res.send(todos);
+//     } catch (e) {
+//         if(!validId(req.params.id)) {
+//             return res.send({success: false, error: 'invalid id'})
+//         }
+//         return res.send({success: false, error: e})
+//     }
+// }
+//
+// module.exports.todoGetAllCompleted = async (req, res) => {
+//
+// }
 
 module.exports.todoGetAll = async (req, res) => {
     try {
         const todos = await Todo.find();
-        console.log('todos', todos);
         if(todos.length === 0 ) {
-            return res.send({success: false, error: 'no posts yet'})
+            return res.send({success: false, error: 'no todos yet'})
         }
         return res.send({ todos });
     }  catch (e) {
