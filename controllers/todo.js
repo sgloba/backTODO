@@ -1,7 +1,7 @@
 const Todo = require('../models/todo');
 const mongoose = require("mongoose");
 
-const validId = (id) => {mongoose.Types.ObjectId.isValid(id)}
+const validId = (id) => mongoose.Types.ObjectId.isValid(id)
 
 module.exports.todoCreate = async (req, res) => {
     console.log(req)
@@ -12,7 +12,7 @@ module.exports.todoCreate = async (req, res) => {
     } catch (e) {
         return res.send({success: false, error: e})
     }
-    return res.send({todo})
+    return res.send(todo)
 }
 
 module.exports.todoDelete = async (req, res) => {
@@ -21,7 +21,7 @@ module.exports.todoDelete = async (req, res) => {
         if(todo === null) {
             return res.send({success: false, error: 'there is no such id'})
         }
-        return res.send({todo})
+        return res.send(todo)
     } catch (e) {
         if(!validId(req.params.id)) {
             return res.send({success: false, error: 'invalid id'})
@@ -30,17 +30,16 @@ module.exports.todoDelete = async (req, res) => {
     }
 }
 
- // ?????????????????
-module.exports.todoUpdate = async (req, res) => {
+module.exports.todoEdit = async (req, res) => {
     try {
         const todo = await Todo.findOneAndReplace(
             { _id: req.params.id },
-            {value: req.body.value, isCompleted: req.body.isCompleted })
+            { value: req.body.value })
 
         if(todo === null) {
             return res.send({success: false, error: 'there is no such id'})
         }
-        return res.send({ todo })
+        return res.send(todo)
     } catch (e) {
         if(!validId(req.params.id)) {
             return res.send({success: false, error: 'invalid id'})
@@ -49,24 +48,25 @@ module.exports.todoUpdate = async (req, res) => {
     }
 }
 
-// module.exports.todoGetAllActive = async (req, res) => {
-//     try {
-//         const todos = await Todo.find({_id: req.params.id})
-//         if(todos === null) {
-//             return res.send({success: false, error: 'there is no such id'})
-//         }
-//         return res.send(todos);
-//     } catch (e) {
-//         if(!validId(req.params.id)) {
-//             return res.send({success: false, error: 'invalid id'})
-//         }
-//         return res.send({success: false, error: e})
-//     }
-// }
-//
-// module.exports.todoGetAllCompleted = async (req, res) => {
-//
-// }
+module.exports.todoToggleActive = async (req, res) => {
+    try {
+
+        const todo = await Todo.findById(req.params.id);
+        todo.isCompleted = !todo.isCompleted;
+        todo.save()
+
+        if(todo === null) {
+            return res.send({success: false, error: 'there is no such id'})
+        }
+        return res.send(todo)
+    } catch (e) {
+        if(!validId(req.params.id)) {
+            return res.send({success: false, error: 'invalid id'})
+        }
+        return res.send({success: false, error: e})
+    }
+}
+
 
 module.exports.todoGetAll = async (req, res) => {
     try {
@@ -74,7 +74,7 @@ module.exports.todoGetAll = async (req, res) => {
         if(todos.length === 0 ) {
             return res.send({success: false, error: 'no todos yet'})
         }
-        return res.send({ todos });
+        return res.send(todos);
     }  catch (e) {
         return res.send({success: false, error: e})
     }

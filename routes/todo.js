@@ -1,3 +1,4 @@
+
 const router = require('express').Router();
 const bodyParser = require('body-parser')
 
@@ -5,28 +6,26 @@ const bodyParser = require('body-parser')
 const {
     todoCreate,
     todoDelete,
-    todoUpdate,
-    todoGetAllActive,
-    todoGetAllCompleted,
-    todoGetAll
-} = require('../controllers/todo')
+    todoEdit,
+    todoGetAll,
+    todoToggleActive
+} = require('../controllers/todo');
 
-router.use(bodyParser.json())
+router.use(bodyParser.json());
 
 // create one todo_
-router.post( '/', todoCreate)
+router.post( '/', todoCreate);
 
 //Get all
 router.get('/', todoGetAll);
 
-//Get one by id
-// router.get('/:id', postGetOne);
 
-//Put / update one by _id
-router.put('/:id', todoUpdate)
+//Put
+router.put('/:id', todoEdit);
+router.put('/:id/toggle', todoToggleActive);
 
 //Delete one by _id
-router.delete('/:id', todoDelete)
+router.delete('/:id', todoDelete);
 
 
 module.exports = router;
