@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const express = require('express')
 const cors = require('cors')
+const passport = require('passport')
+const localStrategy = require('passport-local').Strategy
 const app = express()
 
 mongoose.set('useNewUrlParser', true);
@@ -11,6 +13,10 @@ const port = 4444
 const connectionString = 'mongodb+srv://user:user@cluster0.a8nxy.mongodb.net/Cluster0?retryWrites=true&w=majority'
 
 app.use(cors());
+
+app.use(passport.session({secret: 'secret_key'}))
+
+
 
 app.listen(port, () => {
     console.log('listen on_: ', + port)
