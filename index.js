@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const express = require('express')
 const cors = require('cors')
 const passport = require('passport')
+const cookieParser = require('cookie-parser')
 const localStrategy = require('passport-local').Strategy
 const app = express()
 
@@ -12,9 +13,16 @@ mongoose.set('useCreateIndex', true);
 const port = 4444
 const connectionString = 'mongodb+srv://user:user@cluster0.a8nxy.mongodb.net/Cluster0?retryWrites=true&w=majority'
 
+// https://www.sitepoint.com/using-json-web-tokens-node-js/
+
+
+
 app.use(cors());
 
-app.use(passport.session({secret: 'secret_key'}))
+app.use(cookieParser());
+app.use(sessionMiddleware);
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 
