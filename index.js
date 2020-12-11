@@ -13,7 +13,7 @@ mongoose.set('useCreateIndex', true);
 const port = 4444
 const connectionString = 'mongodb+srv://user:user@cluster0.a8nxy.mongodb.net/Cluster0?retryWrites=true&w=majority'
 
-// https://www.sitepoint.com/using-json-web-tokens-node-js/
+// https://www.digitalocean.com/community/tutorials/api-authentication-with-json-web-tokensjwt-and-passport
 
 
 
