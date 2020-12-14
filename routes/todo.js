@@ -19,7 +19,6 @@ router.post( '/', todoCreate);
 //Get all
 router.get('/', todoGetAll);
 
-
 //Put
 router.put('/:id', todoEdit);
 router.put('/:id/toggle', todoToggleActive);

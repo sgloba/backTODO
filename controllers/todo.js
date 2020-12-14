@@ -4,11 +4,10 @@ const mongoose = require("mongoose");
 const validId = (id) => mongoose.Types.ObjectId.isValid(id)
 
 module.exports.todoCreate = async (req, res) => {
-    console.log(req)
     const {value} = req.body;
     const todo = new Todo({value})
     try {
-        await todo.save().then(_ => console.log(req.body))
+        await todo.save()
     } catch (e) {
         return res.send({success: false, error: e})
     }
