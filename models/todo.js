@@ -2,6 +2,12 @@ const mongoose = require("mongoose");
 
 const todoSchema = mongoose.Schema({
     value: {type: String, default: 'default_value'},
+    subTasks: [
+        {
+            value: {type: String, default: 'default_value'},
+            isCompleted: {type: Boolean, default: false}
+        }
+    ],
     timestamp: {
         type: Date,
         default: Date.now()
