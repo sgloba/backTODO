@@ -86,7 +86,9 @@ module.exports.todoAddSubTask = async (req, res) => {
     try {
         const todo = await Todo.findOneAndUpdate(
             { _id: req.params.id },
-            { $addToSet: {subTasks: [ {value: req.body.value}]}  })
+            { $addToSet: {subTasks: [ {value: req.body.value}]}  },
+            {new: true}
+            )
 
         if(todo === null) {
             return res.send({success: false, error: 'there is no such id'})
@@ -104,7 +106,9 @@ module.exports.todoDeleteSubTask = async (req, res) => {
     try {
         const todo = await Todo.findOneAndUpdate(
             { _id: req.params.id },
-            { $pull: {subTasks:  {_id: req.params.subId}  }  })
+            { $pull: {subTasks:  {_id: req.params.subId}  }  },
+            {new: true}
+            )
         if(todo === null) {
             return res.send({success: false, error: 'there is no such id'})
         }
@@ -121,7 +125,9 @@ module.exports.todoToggleSubTaskActive = async (req, res) => {
     try {
 
             const todo = await Todo.findById(req.params.id);
-            todo.subTasks[req.params.subid].isCompleted = true
+            todo.subTasks
+                .filter(subtask => subtask._id.toString() === req.params.subId)
+                .map(subtask => subtask.isCompleted = !subtask.isCompleted)
             todo.save()
 
         if(todo === null) {
