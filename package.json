@@ -4,7 +4,8 @@
   "description": "backend for todo angular 11 app",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -25,5 +26,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
+  },
+  "engines": {
+    "node": "15.x"
   }
 }

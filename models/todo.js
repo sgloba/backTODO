@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const todoSchema = mongoose.Schema({
     value: {type: String, default: 'default_value'},
+    category: {type: [String], default: 'home'},
     subTasks: [
         {
             value: {type: String},
