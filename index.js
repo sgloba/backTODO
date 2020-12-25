@@ -5,6 +5,7 @@ const passport = require('passport')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const app = express()
+require('dotenv').config()
 
 require('./controllers/auth')
 
@@ -15,9 +16,8 @@ mongoose.set('useCreateIndex', true);
 
 const { PORT=3000, LOCAL_ADDRESS='0.0.0.0' } = process.env
 
-// const connectionString = 'mongodb+srv://user:user@cluster0.a8nxy.mongodb.net/Cluster0?retryWrites=true&w=majority'
 
-const connectionString = process.env.CONNECTION_STRING
+const connectionString = process.env.DB_CONNECTION_STRING
 
 
 
