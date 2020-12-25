@@ -13,7 +13,7 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-const port = 4444
+const { PORT=3000, LOCAL_ADDRESS='0.0.0.0' } = process.env
 const connectionString = 'mongodb+srv://user:user@cluster0.a8nxy.mongodb.net/Cluster0?retryWrites=true&w=majority'
 
 
@@ -27,9 +27,11 @@ app.use(passport.initialize());
 passport.authenticate('jwt', { session: false })
 
 
-app.listen(port, () => {
-    console.log('listen on_: ', + port)
-})
+app.listen(PORT, LOCAL_ADDRESS, () => {
+    const address = app.address();
+    console.log('server listening at', address);
+});
+
 app.use('/api', require('./routes'));
 
 mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true})
