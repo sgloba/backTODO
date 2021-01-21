@@ -25,9 +25,9 @@ app.use(cors());
 
 app.use(cookieParser());
 app.use(bodyParser());
-app.use(passport.initialize());
+// app.use(passport.initialize());
 
-passport.authenticate('jwt', { session: false })
+// passport.authenticate('jwt', { session: false })
 
 
 app.listen(PORT, LOCAL_ADDRESS, () => {

@@ -70,6 +70,7 @@ module.exports.todoToggleActive = async (req, res) => {
 module.exports.todoGetAll = async (req, res) => {
     try {
         const todos = await Todo.find();
+        console.log('todos', todos);
         if(todos.length === 0 ) {
             return res.send({success: false, error: 'no todos yet'})
         }
